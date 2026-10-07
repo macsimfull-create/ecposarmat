@@ -3,164 +3,1602 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="ЕЦПО «САРМАТ» — подготовка операторов БПЛА. Теория, практика и современные технологии обучения.">
-<title>ЕЦПО «САРМАТ» — Подготовка операторов БПЛА</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Roboto+Mono:wght@400;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+
+<title>Проект «САРМАТ» — Беспилотные системы</title>
+
+<style>
+:root {
+    --bg: #070b10;
+    --bg2: #0b1119;
+    --card: rgba(17, 24, 34, 0.72);
+    --card-border: rgba(255,255,255,0.08);
+    --text: #f4f7fa;
+    --muted: #9da8b5;
+    --orange: #ff7a18;
+    --orange-light: #ff9a4a;
+    --blue: #267cff;
+    --max: 1200px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    color: var(--text);
+    background:
+        radial-gradient(circle at 75% 15%, rgba(38,124,255,.13), transparent 30%),
+        radial-gradient(circle at 20% 70%, rgba(255,122,24,.07), transparent 30%),
+        linear-gradient(135deg, #05080c, #0a1018 55%, #05080c);
+    overflow-x: hidden;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    opacity: .22;
+    background-image:
+        linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+    background-size: 50px 50px;
+    mask-image: linear-gradient(to bottom, black, transparent 90%);
+    z-index: -2;
+}
+
+body::after {
+    content: "";
+    position: fixed;
+    width: 700px;
+    height: 700px;
+    right: -300px;
+    top: 10%;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,122,24,.08), transparent 65%);
+    pointer-events: none;
+    z-index: -1;
+}
+
+/* HEADER */
+
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    padding: 18px 30px;
+    transition: .3s;
+}
+
+header.scrolled {
+    background: rgba(5,8,12,.82);
+    backdrop-filter: blur(18px);
+    border-bottom: 1px solid rgba(255,255,255,.07);
+}
+
+.nav {
+    max-width: var(--max);
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo {
+    font-size: 21px;
+    font-weight: 800;
+    letter-spacing: 2px;
+}
+
+.logo span {
+    color: var(--orange);
+}
+
+nav {
+    display: flex;
+    gap: 28px;
+}
+
+nav a {
+    color: #c8d0d8;
+    text-decoration: none;
+    font-size: 14px;
+    transition: .25s;
+}
+
+nav a:hover {
+    color: white;
+}
+
+/* HERO */
+
+.hero {
+    min-height: 100vh;
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 130px 30px 80px;
+    overflow: hidden;
+}
+
+.hero-container {
+    max-width: var(--max);
+    width: 100%;
+    margin: auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 5;
+}
+
+.eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--orange-light);
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 24px;
+}
+
+.eyebrow::before {
+    content: "";
+    width: 28px;
+    height: 1px;
+    background: var(--orange);
+}
+
+.hero h1 {
+    font-size: clamp(48px, 6vw, 86px);
+    line-height: .95;
+    letter-spacing: -4px;
+    margin-bottom: 28px;
+}
+
+.hero h1 span {
+    color: var(--orange);
+}
+
+.hero p {
+    max-width: 570px;
+    color: var(--muted);
+    font-size: 18px;
+    line-height: 1.7;
+    margin-bottom: 34px;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+}
+
+.btn {
+    padding: 15px 22px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 700;
+    transition: .25s;
+}
+
+.btn-primary {
+    color: #111;
+    background: var(--orange);
+    box-shadow: 0 0 30px rgba(255,122,24,.18);
+}
+
+.btn-primary:hover {
+    transform: translateY(-3px);
+    background: var(--orange-light);
+}
+
+.btn-secondary {
+    color: white;
+    border: 1px solid rgba(255,255,255,.12);
+    background: rgba(255,255,255,.04);
+}
+
+.btn-secondary:hover {
+    background: rgba(255,255,255,.08);
+}
+
+/* HERO TECHNOLOGY */
+
+.hero-visual {
+    position: relative;
+    height: 570px;
+}
+
+.tech-scene {
+    position: absolute;
+    inset: 0;
+    border-radius: 30px;
+    overflow: hidden;
+    background:
+        radial-gradient(circle at 50% 48%, rgba(255,122,24,.13), transparent 25%),
+        radial-gradient(circle at 70% 25%, rgba(38,124,255,.18), transparent 35%),
+        linear-gradient(145deg, #101821, #070b10);
+    border: 1px solid rgba(255,255,255,.08);
+    box-shadow:
+        inset 0 0 100px rgba(0,0,0,.7),
+        0 30px 80px rgba(0,0,0,.4);
+}
+
+.tech-scene::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px);
+    background-size: 38px 38px;
+    transform: perspective(500px) rotateX(55deg) scale(1.5);
+    transform-origin: center bottom;
+    opacity: .5;
+}
+
+.orbit {
+    position: absolute;
+    width: 360px;
+    height: 360px;
+    border: 1px solid rgba(255,122,24,.25);
+    border-radius: 50%;
+    left: 50%;
+    top: 48%;
+    transform: translate(-50%,-50%);
+    box-shadow:
+        0 0 60px rgba(255,122,24,.08),
+        inset 0 0 60px rgba(255,122,24,.04);
+}
+
+.orbit::before,
+.orbit::after {
+    content: "";
+    position: absolute;
+    border-radius: 50%;
+    border: 1px solid rgba(38,124,255,.18);
+}
+
+.orbit::before {
+    inset: 45px;
+}
+
+.orbit::after {
+    inset: 95px;
+}
+
+.aircraft {
+    position: absolute;
+    width: 300px;
+    height: 110px;
+    left: 50%;
+    top: 48%;
+    transform: translate(-50%,-50%);
+    filter: drop-shadow(0 15px 25px rgba(0,0,0,.7));
+}
+
+.aircraft-body {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 190px;
+    height: 42px;
+    transform: translate(-50%,-50%);
+    border-radius: 55% 45% 50% 50%;
+    background: linear-gradient(120deg, #26313d, #10161d 60%, #323d48);
+    border: 1px solid rgba(255,255,255,.15);
+    box-shadow:
+        inset 0 2px 8px rgba(255,255,255,.1),
+        0 0 30px rgba(38,124,255,.12);
+}
+
+.aircraft-body::before {
+    content: "";
+    position: absolute;
+    width: 60px;
+    height: 8px;
+    left: 65px;
+    top: 16px;
+    border-radius: 20px;
+    background: #ff7a18;
+    box-shadow: 0 0 18px #ff7a18;
+}
+
+.wing {
+    position: absolute;
+    top: 50%;
+    width: 125px;
+    height: 55px;
+    background: linear-gradient(145deg, #202a34, #0d1319);
+    border: 1px solid rgba(255,255,255,.1);
+}
+
+.wing-left {
+    right: 50%;
+    transform: translateY(-50%) skewY(18deg);
+    clip-path: polygon(100% 0, 0 35%, 0 70%, 100% 100%);
+}
+
+.wing-right {
+    left: 50%;
+    transform: translateY(-50%) skewY(-18deg);
+    clip-path: polygon(0 0, 100% 35%, 100% 70%, 0 100%);
+}
+
+.tech-line {
+    position: absolute;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--orange), transparent);
+    opacity: .7;
+}
+
+.line-one {
+    width: 180px;
+    top: 24%;
+    left: 8%;
+}
+
+.line-two {
+    width: 140px;
+    bottom: 20%;
+    right: 8%;
+}
+
+.hud {
+    position: absolute;
+    padding: 12px 15px;
+    border: 1px solid rgba(255,255,255,.1);
+    background: rgba(7,11,16,.6);
+    backdrop-filter: blur(10px);
+    border-radius: 10px;
+    color: #9da8b5;
+    font-size: 11px;
+    letter-spacing: 1px;
+}
+
+.hud strong {
+    display: block;
+    color: white;
+    margin-top: 5px;
+    font-size: 15px;
+}
+
+.hud-one {
+    top: 35px;
+    right: 30px;
+}
+
+.hud-two {
+    bottom: 35px;
+    left: 30px;
+}
+
+.corner {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    border-color: rgba(255,122,24,.6);
+}
+
+.corner-tl {
+    top: 20px;
+    left: 20px;
+    border-top: 1px solid;
+    border-left: 1px solid;
+}
+
+.corner-br {
+    bottom: 20px;
+    right: 20px;
+    border-bottom: 1px solid;
+    border-right: 1px solid;
+}
+
+/* SECTIONS */
+
+section {
+    padding: 110px 30px;
+}
+
+.container {
+    max-width: var(--max);
+    margin: auto;
+}
+
+.section-heading {
+    max-width: 720px;
+    margin-bottom: 55px;
+}
+
+.section-heading small {
+    color: var(--orange);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 700;
+}
+
+.section-heading h2 {
+    font-size: clamp(38px, 5vw, 62px);
+    letter-spacing: -2px;
+    margin: 15px 0;
+}
+
+.section-heading p {
+    color: var(--muted);
+    font-size: 17px;
+    line-height: 1.7;
+}
+
+/* CARDS */
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 18px;
+}
+
+.card {
+    padding: 30px;
+    border-radius: 18px;
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    backdrop-filter: blur(12px);
+    transition: .35s;
+}
+
+.card:hover {
+    transform: translateY(-7px);
+    border-color: rgba(255,122,24,.3);
+    box-shadow: 0 20px 50px rgba(0,0,0,.25);
+}
+
+.card-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: grid;
+    place-items: center;
+    margin-bottom: 22px;
+    background: rgba(255,122,24,.1);
+    color: var(--orange);
+    font-size: 22px;
+}
+
+.card h3 {
+    font-size: 21px;
+    margin-bottom: 12px;
+}
+
+.card p {
+    color: var(--muted);
+    line-height: 1.65;
+}
+
+/* TIMELINE */
+
+.timeline {
+    position: relative;
+    max-width: 900px;
+    margin: auto;
+}
+
+.timeline::before {
+    content: "";
+    position: absolute;
+    left: 17px;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: linear-gradient(var(--orange), rgba(255,122,24,.05));
+}
+
+.timeline-item {
+    position: relative;
+    padding-left: 60px;
+    margin-bottom: 35px;
+}
+
+.timeline-dot {
+    position: absolute;
+    left: 9px;
+    top: 5px;
+    width: 17px;
+    height: 17px;
+    border-radius: 50%;
+    background: var(--orange);
+    box-shadow: 0 0 20px rgba(255,122,24,.5);
+}
+
+.timeline-item h3 {
+    margin-bottom: 10px;
+    font-size: 22px;
+}
+
+.timeline-item p {
+    color: var(--muted);
+    line-height: 1.7;
+}
+
+/* MONEY */
+
+.money-grid {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 18px;
+}
+
+.money-card {
+    padding: 35px;
+    border-radius: 20px;
+    background:
+        linear-gradient(145deg, rgba(255,122,24,.09), rgba(17,24,34,.75));
+    border: 1px solid rgba(255,122,24,.16);
+}
+
+.money-card span {
+    color: var(--muted);
+    font-size: 14px;
+}
+
+.money-card strong {
+    display: block;
+    margin: 14px 0;
+    font-size: 35px;
+}
+
+.money-card p {
+    color: #89939e;
+    line-height: 1.6;
+    font-size: 14px;
+}
+
+/* FEATURES */
+
+.features {
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 16px;
+}
+
+.feature {
+    padding: 25px;
+    border-radius: 16px;
+    background: rgba(255,255,255,.035);
+    border: 1px solid rgba(255,255,255,.06);
+}
+
+.feature h3 {
+    margin-bottom: 10px;
+}
+
+.feature p {
+    color: var(--muted);
+    line-height: 1.55;
+    font-size: 14px;
+}
+
+/* REQUIREMENTS */
+
+.requirements {
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 16px;
+}
+
+.requirement {
+    padding: 25px;
+    border-radius: 16px;
+    background: rgba(255,255,255,.035);
+    border: 1px solid rgba(255,255,255,.07);
+}
+
+.requirement-number {
+    color: var(--orange);
+    font-size: 13px;
+    margin-bottom: 30px;
+}
+
+.requirement h3 {
+    margin-bottom: 10px;
+}
+
+.requirement p {
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+/* FAQ */
+
+.faq {
+    max-width: 850px;
+}
+
+.faq-item {
+    border-bottom: 1px solid rgba(255,255,255,.08);
+}
+
+.faq-question {
+    padding: 25px 0;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.faq-question > span:first-child {
+    transform: none !important;
+    transition: none !important;
+}
+
+.faq-question > span:last-child {
+    color: var(--orange);
+    font-size: 25px;
+    line-height: 1;
+    flex-shrink: 0;
+    transition: transform .3s ease;
+}
+
+.faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    color: var(--muted);
+    line-height: 1.7;
+    transition: max-height .35s ease, padding .35s ease;
+}
+
+.faq-item.active .faq-answer {
+    max-height: 200px;
+    padding-bottom: 20px;
+}
+
+.faq-item.active .faq-question > span:last-child {
+    transform: rotate(45deg);
+}
+
+/* CONTACTS */
+
+.contacts-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    max-width: 850px;
+}
+
+.contact-card {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 25px;
+    border-radius: 18px;
+    text-decoration: none;
+    color: white;
+    background: rgba(17,24,34,.72);
+    border: 1px solid rgba(255,255,255,.08);
+    backdrop-filter: blur(12px);
+    transition: .3s ease;
+}
+
+.contact-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(255,122,24,.4);
+    box-shadow: 0 15px 40px rgba(0,0,0,.25);
+}
+
+.contact-icon {
+    width: 50px;
+    height: 50px;
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    border-radius: 14px;
+    color: var(--orange);
+    background: rgba(255,122,24,.1);
+    font-size: 22px;
+}
+
+.contact-card span {
+    display: block;
+    color: var(--muted);
+    font-size: 13px;
+    margin-bottom: 7px;
+}
+
+.contact-card strong {
+    font-size: 19px;
+}
+
+/* FOOTER */
+
+footer {
+    padding: 60px 30px;
+    border-top: 1px solid rgba(255,255,255,.07);
+    background: #05080c;
+}
+
+.footer {
+    max-width: var(--max);
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+}
+
+.footer-title {
+    font-size: 20px;
+    font-weight: 800;
+}
+
+.footer p {
+    color: #727d89;
+    max-width: 600px;
+    line-height: 1.6;
+    font-size: 13px;
+}
+
+/* АНИМАЦИИ */
+
+.section-heading,
+.card,
+.money-card,
+.feature,
+.timeline-item,
+.faq-item,
+.contact-card {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity .7s ease, transform .7s ease;
+}
+
+.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* MOBILE */
+
+@media (max-width: 900px) {
+
+    nav {
+        display: none;
+    }
+
+    .hero-container {
+        grid-template-columns: 1fr;
+    }
+
+    .hero-visual {
+        height: 430px;
+    }
+
+    .grid,
+    .money-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .features,
+    .requirements {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 600px) {
+
+    header {
+        padding: 16px 20px;
+    }
+
+    section {
+        padding: 80px 20px;
+    }
+
+    .hero {
+        padding: 110px 20px 60px;
+    }
+
+    .hero h1 {
+        letter-spacing: -2px;
+    }
+
+    .hero p {
+        font-size: 16px;
+    }
+
+    .hero-visual {
+        height: 350px;
+    }
+
+    .orbit {
+        width: 240px;
+        height: 240px;
+    }
+
+    .aircraft {
+        transform: translate(-50%,-50%) scale(.75);
+    }
+
+    .grid,
+    .money-grid,
+    .features,
+    .requirements,
+    .contacts-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .footer {
+        flex-direction: column;
+    }
+
+    .hud {
+        transform: scale(.85);
+    }
+
+    .contact-card strong {
+        font-size: 17px;
+    }
+}
+</style>
 </head>
+
 <body>
 
-<header class="header">
-  <a class="brand" href="#top">
-    <span class="brand-symbol">✦</span>
-    <span><b>ЕЦПО</b><small>«САРМАТ»</small></span>
-  </a>
-  <nav id="nav">
-    <a href="#about">О центре</a>
-    <a href="#program">Программа</a>
-    <a href="#equipment">Оборудование</a>
-    <a href="#faq">FAQ</a>
-    <a href="#contact">Контакты</a>
-  </nav>
-  <a class="header-phone" href="tel:+74950081090">+7 495 008-10-90</a>
-  <button class="burger" aria-label="Открыть меню" onclick="toggleMenu()">☰</button>
+<header id="header">
+    <div class="nav">
+
+        <div class="logo">
+            САРМАТ<span>.</span>
+        </div>
+
+        <nav>
+            <a href="#about">О проекте</a>
+            <a href="#program">Программа</a>
+            <a href="#conditions">Условия</a>
+            <a href="#requirements">Требования</a>
+            <a href="#faq">FAQ</a>
+            <a href="#contacts">Контакты</a>
+        </nav>
+
+    </div>
 </header>
 
-<main id="top">
 <section class="hero">
-  <div class="hero-bg"></div>
-  <div class="scan"></div>
-  <div class="hud hud-tl">● REC <b>00:14:59</b><br><strong>LINK: 99% 5.8GHz</strong></div>
-  <div class="hud hud-tr"><strong>GPS: 14 SATS</strong><br>MODE: ACRO</div>
-  <div class="hud hud-bl">LAT: 47.3829 N<br>LON: 38.8162 E</div>
-  <div class="hud hud-br">BAT: 22.4V<br>PITCH: 16° ROLL: -19°</div>
-  <div class="side-meter left"><span>SPD</span><i></i><b>20</b></div>
-  <div class="side-meter right"><span>ALT</span><i></i><b>160</b></div>
 
-  <div class="hero-content">
-    <div class="hero-logo">
-      <div class="logo-emblem">✦</div>
-      <div><b>ЕЦПО «САРМАТ»</b><small>МЫ СОЗДАЁМ ПРОФЕССИОНАЛОВ</small></div>
+    <div class="hero-container">
+
+        <div class="hero-content">
+
+            <div class="eyebrow">
+                Технологии • Обучение • Беспилотные системы
+            </div>
+
+            <h1>
+                Проект<br>
+                <span>«САРМАТ»</span>
+            </h1>
+
+            <p>
+                Информационный ресурс о программе подготовки
+                специалистов в области беспилотных систем,
+                условиях обучения и структуре программы.
+            </p>
+
+            <div class="hero-buttons">
+
+                <a href="#about" class="btn btn-primary">
+                    Подробнее о программе
+                </a>
+
+                <a href="#program" class="btn btn-secondary">
+                    Программа обучения
+                </a>
+
+            </div>
+
+        </div>
+
+        <div class="hero-visual">
+
+            <div class="tech-scene">
+
+                <div class="corner corner-tl"></div>
+                <div class="corner corner-br"></div>
+
+                <div class="orbit"></div>
+
+                <div class="tech-line line-one"></div>
+                <div class="tech-line line-two"></div>
+
+                <div class="aircraft">
+
+                    <div class="wing wing-left"></div>
+                    <div class="wing wing-right"></div>
+
+                    <div class="aircraft-body"></div>
+
+                </div>
+
+                <div class="hud hud-one">
+                    SYSTEM
+                    <strong>ONLINE</strong>
+                </div>
+
+                <div class="hud hud-two">
+                    TRAINING
+                    <strong>TECH / UAV</strong>
+                </div>
+
+            </div>
+
+        </div>
+
     </div>
-    <p class="eyebrow">ТЕХНОЛОГИЧЕСКИЙ УЧЕБНЫЙ ЦЕНТР</p>
-    <h1>ПОДГОТОВКА<br><span>ОПЕРАТОРОВ БПЛА</span></h1>
-    <p class="hero-sub">Профессиональное обучение работе с беспилотными летательными аппаратами.</p>
-    <div class="hero-actions">
-      <a class="btn btn-primary" href="#contact">ХОЧУ В САРМАТ</a>
-      <a class="btn btn-outline" href="#program">УЗНАТЬ О ПРОГРАММЕ</a>
+
+</section>
+
+<section id="about">
+
+    <div class="container">
+
+        <div class="section-heading">
+
+            <small>01 / О проекте</small>
+
+            <h2>Технологии начинаются с подготовки.</h2>
+
+            <p>
+                Проект «САРМАТ» создан для подготовки специалистов
+                в области беспилотных систем. Программа сочетает
+                теоретическую подготовку, работу с симуляторами
+                и практические занятия.
+            </p>
+
+        </div>
+
+        <div class="grid">
+
+            <div class="card">
+
+                <div class="card-icon">◈</div>
+
+                <h3>Современное оборудование</h3>
+
+                <p>
+                    Изучение современных технических систем
+                    и оборудования в рамках учебной программы.
+                </p>
+
+            </div>
+
+            <div class="card">
+
+                <div class="card-icon">⌁</div>
+
+                <h3>Подготовительные центры</h3>
+
+                <p>
+                    Организация учебного процесса в специально
+                    оборудованных центрах подготовки.
+                </p>
+
+            </div>
+
+            <div class="card">
+
+                <div class="card-icon">△</div>
+
+                <h3>Практическая подготовка</h3>
+
+                <p>
+                    Практические занятия позволяют закрепить
+                    знания и освоить работу с оборудованием.
+                </p>
+
+            </div>
+
+        </div>
+
     </div>
-  </div>
-  <a class="floating-call" href="tel:+74950081090">☎</a>
-  <div class="scroll">SCROLL ↓</div>
+
 </section>
 
-<section class="section about" id="about">
-  <div class="section-head"><span>01 / О ЦЕНТРЕ</span><h2>ЕЦПО <em>«САРМАТ»</em></h2></div>
-  <div class="about-grid">
-    <div class="about-copy">
-      <p class="lead">Учебный центр, специализирующийся на подготовке операторов беспилотных летательных аппаратов.</p>
-      <p>Мы создаём условия для получения современных практических навыков работы с БПЛА. Обучение построено последовательно: от теоретической базы и знакомства с оборудованием до практических занятий.</p>
-      <div class="stats">
-        <div><b>01</b><span>Теория</span></div>
-        <div><b>02</b><span>Симулятор</span></div>
-        <div><b>03</b><span>Практика</span></div>
-      </div>
+<section id="program">
+
+    <div class="container">
+
+        <div class="section-heading">
+
+            <small>02 / Программа</small>
+
+            <h2>Программа курса</h2>
+
+            <p>
+                Продолжительность подготовки — около 50 дней.
+                Обучение включает несколько последовательных этапов.
+            </p>
+
+        </div>
+
+        <div class="timeline">
+
+            <div class="timeline-item">
+
+                <div class="timeline-dot"></div>
+
+                <h3>1-й день — Прибытие и теория</h3>
+
+                <p>
+                    Встреча на базе, размещение, знакомство
+                    с программой обучения, изучение устройства
+                    беспилотных систем и правил безопасности.
+                </p>
+
+            </div>
+
+            <div class="timeline-item">
+
+                <div class="timeline-dot"></div>
+
+                <h3>2–5-й день — Симуляторы</h3>
+
+                <p>
+                    Теоретическая подготовка, работа
+                    с компьютерными симуляторами, изучение
+                    настройки и технического обслуживания.
+                </p>
+
+            </div>
+
+            <div class="timeline-item">
+
+                <div class="timeline-dot"></div>
+
+                <h3>6–47-й день — Практическая подготовка</h3>
+
+                <p>
+                    Практические занятия и освоение оборудования
+                    в соответствии с утверждённой программой подготовки.
+                </p>
+
+            </div>
+
+        </div>
+
     </div>
-    <div class="about-card">
-      <div class="corner">SYSTEM ONLINE</div>
-      <div class="radar"><span></span></div>
-      <div class="about-card-text">ПРАКТИКО-ОРИЕНТИРОВАННАЯ<br><b>ПОДГОТОВКА</b></div>
+
+</section>
+
+<section id="conditions">
+
+    <div class="container">
+
+        <div class="section-heading">
+
+            <small>03 / Условия</small>
+
+            <h2>Финансовые условия</h2>
+
+            <p>
+                Указанные суммы являются информационными.
+                Актуальные условия необходимо проверять
+                по официальным документам.
+            </p>
+
+        </div>
+
+        <div class="money-grid">
+
+            <div class="money-card">
+
+                <span>Ежемесячные выплаты</span>
+
+                <strong>до 220 000 ₽</strong>
+
+                <p>
+                    Указанная сумма зависит от позиции,
+                    квалификации и действующих условий.
+                </p>
+
+            </div>
+
+            <div class="money-card">
+
+                <span>Расчётная сумма за год</span>
+
+                <strong>до 5,54 млн ₽</strong>
+
+                <p>
+                    Расчётная сумма согласно предоставленной
+                    информации и указанным условиям выплат.
+                </p>
+
+            </div>
+
+            <div class="money-card">
+
+                <span>Единовременная выплата</span>
+
+                <strong>до 3 млн ₽</strong>
+
+                <p>
+                    Размер, условия и сроки выплаты необходимо
+                    уточнять по официальным документам.
+                </p>
+
+            </div>
+
+        </div>
+
     </div>
-  </div>
+
 </section>
 
-<section class="section dark" id="program">
-  <div class="section-head"><span>02 / ПРОГРАММА</span><h2>ЧЕМУ ВЫ <em>НАУЧИТЕСЬ</em></h2></div>
-  <div class="cards">
-    <article class="card"><span>01</span><h3>УПРАВЛЕНИЕ БПЛА</h3><p>Основы управления и практическая работа с беспилотными аппаратами.</p></article>
-    <article class="card"><span>02</span><h3>НАВИГАЦИЯ</h3><p>Работа с навигационными системами и ориентирование.</p></article>
-    <article class="card"><span>03</span><h3>ПОДГОТОВКА К ПОЛЁТАМ</h3><p>Проверка оборудования, подготовка аппарата и организация полёта.</p></article>
-    <article class="card"><span>04</span><h3>ПРАКТИКА</h3><p>Практико-ориентированные занятия с учебным оборудованием.</p></article>
-    <article class="card"><span>05</span><h3>ТЕХНИЧЕСКАЯ ПОДГОТОВКА</h3><p>Основы устройства и обслуживания БПЛА.</p></article>
-    <article class="card"><span>06</span><h3>РАБОТА В КОМАНДЕ</h3><p>Взаимодействие специалистов в процессе подготовки и выполнения задач.</p></article>
-  </div>
+<section>
 
-  <div class="timeline">
-    <div class="line"></div>
-    <div class="step"><b>01</b><span>Теория</span></div>
-    <div class="step"><b>02</b><span>Оборудование</span></div>
-    <div class="step"><b>03</b><span>Симулятор</span></div>
-    <div class="step"><b>04</b><span>Практика</span></div>
-    <div class="step"><b>05</b><span>Полёты</span></div>
-    <div class="step"><b>06</b><span>Итоговая подготовка</span></div>
-  </div>
+    <div class="container">
+
+        <div class="section-heading">
+
+            <small>04 / Поддержка</small>
+
+            <h2>Социальные условия</h2>
+
+        </div>
+
+        <div class="features">
+
+            <div class="feature">
+
+                <h3>Проживание</h3>
+
+                <p>
+                    Информация об условиях размещения
+                    предоставляется в рамках программы.
+                </p>
+
+            </div>
+
+            <div class="feature">
+
+                <h3>Питание</h3>
+
+                <p>
+                    Условия питания определяются
+                    действующими правилами программы.
+                </p>
+
+            </div>
+
+            <div class="feature">
+
+                <h3>Экипировка</h3>
+
+                <p>
+                    Необходимое оборудование и экипировка
+                    предоставляются согласно установленным условиям.
+                </p>
+
+            </div>
+
+            <div class="feature">
+
+                <h3>Медицинское обслуживание</h3>
+
+                <p>
+                    Медицинские условия регулируются
+                    действующими нормативными документами.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
 </section>
 
-<section class="section why">
-  <div class="section-head"><span>03 / ПОЧЕМУ САРМАТ</span><h2>СИСТЕМНЫЙ <em>ПОДХОД</em></h2></div>
-  <div class="benefits">
-    <div><b>ПРАКТИКА</b><p>Фокус на закреплении навыков.</p></div>
-    <div><b>ТЕХНОЛОГИИ</b><p>Современное учебное оборудование.</p></div>
-    <div><b>ИНСТРУКТОРЫ</b><p>Занятия под руководством специалистов.</p></div>
-    <div><b>СИСТЕМНОСТЬ</b><p>Последовательная программа подготовки.</p></div>
-  </div>
+<section>
+
+    <div class="container">
+
+        <div class="section-heading">
+
+            <small>05 / Дополнительно</small>
+
+            <h2>Основные условия</h2>
+
+        </div>
+
+        <div class="grid">
+
+            <div class="card">
+
+                <div class="card-icon">01</div>
+
+                <h3>Срок контракта</h3>
+
+                <p>
+                    1 год с возможностью продления
+                    в соответствии с действующими условиями.
+                </p>
+
+            </div>
+
+            <div class="card">
+
+                <div class="card-icon">02</div>
+
+                <h3>Трудовые гарантии</h3>
+
+                <p>
+                    Информация должна соответствовать
+                    действующему законодательству.
+                </p>
+
+            </div>
+
+            <div class="card">
+
+                <div class="card-icon">03</div>
+
+                <h3>Образование</h3>
+
+                <p>
+                    Возможные образовательные льготы
+                    необходимо подтверждать актуальными
+                    нормативными документами.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
 </section>
 
-<section class="section dark" id="equipment">
-  <div class="section-head"><span>04 / ОБОРУДОВАНИЕ</span><h2>ТЕХНИКА ДЛЯ <em>ОБУЧЕНИЯ</em></h2></div>
-  <div class="equipment-grid">
-    <div class="equipment"><div class="equipment-img drone"></div><h3>БПЛА</h3><p>Учебные беспилотные аппараты</p></div>
-    <div class="equipment"><div class="equipment-img controller"></div><h3>ПУЛЬТ УПРАВЛЕНИЯ</h3><p>Оборудование оператора</p></div>
-    <div class="equipment"><div class="equipment-img fpv"></div><h3>FPV-СИСТЕМА</h3><p>Средства визуального контроля</p></div>
-  </div>
+<section id="requirements">
+
+    <div class="container">
+
+        <div class="section-heading">
+
+            <small>06 / Требования</small>
+
+            <h2>Требования к кандидатам</h2>
+
+            <p>
+                Конкретные требования необходимо указывать
+                только на основании официальной документации.
+            </p>
+
+        </div>
+
+        <div class="requirements">
+
+            <div class="requirement">
+
+                <div class="requirement-number">01</div>
+
+                <h3>Документы</h3>
+
+                <p>
+                    Перечень необходимых документов
+                    определяется официальными правилами.
+                </p>
+
+            </div>
+
+            <div class="requirement">
+
+                <div class="requirement-number">02</div>
+
+                <h3>Подготовка</h3>
+
+                <p>
+                    Требования к уровню подготовки
+                    зависят от выбранного направления.
+                </p>
+
+            </div>
+
+            <div class="requirement">
+
+                <div class="requirement-number">03</div>
+
+                <h3>Медицинские условия</h3>
+
+                <p>
+                    Определяются действующими нормативами
+                    и установленным порядком.
+                </p>
+
+            </div>
+
+            <div class="requirement">
+
+                <div class="requirement-number">04</div>
+
+                <h3>Дополнительные условия</h3>
+
+                <p>
+                    Актуальные условия необходимо уточнять
+                    в официальных источниках.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
 </section>
 
-<section class="section process">
-  <div class="section-head"><span>05 / КАК ЭТО РАБОТАЕТ</span><h2>ПУТЬ <em>ОБУЧЕНИЯ</em></h2></div>
-  <div class="process-grid">
-    <div><b>01</b><h3>ЗАЯВКА</h3><p>Оставьте контактные данные.</p></div>
-    <div><b>02</b><h3>КОНСУЛЬТАЦИЯ</h3><p>Получите информацию о программе.</p></div>
-    <div><b>03</b><h3>ОБУЧЕНИЕ</h3><p>Теория, тренажёр и практика.</p></div>
-    <div><b>04</b><h3>ИТОГ</h3><p>Закрепление полученных навыков.</p></div>
-  </div>
+<section id="faq">
+
+    <div class="container">
+
+        <div class="section-heading">
+
+            <small>07 / FAQ</small>
+
+            <h2>Частые вопросы</h2>
+
+        </div>
+
+        <div class="faq">
+
+            <div class="faq-item">
+
+                <div class="faq-question">
+                    <span>Сколько длится подготовка?</span>
+                    <span>+</span>
+                </div>
+
+                <div class="faq-answer">
+                    Продолжительность подготовки составляет
+                    около 50 дней согласно представленной программе.
+                </div>
+
+            </div>
+
+            <div class="faq-item">
+
+                <div class="faq-question">
+                    <span>Какие этапы включает обучение?</span>
+                    <span>+</span>
+                </div>
+
+                <div class="faq-answer">
+                    Программа включает теоретическую подготовку,
+                    работу с симуляторами и практические занятия.
+                </div>
+
+            </div>
+
+            <div class="faq-item">
+
+                <div class="faq-question">
+                    <span>Какое оборудование используется?</span>
+                    <span>+</span>
+                </div>
+
+                <div class="faq-answer">
+                    Используемое оборудование определяется
+                    конкретной учебной программой и направлением подготовки.
+                </div>
+
+            </div>
+
+            <div class="faq-item">
+
+                <div class="faq-question">
+                    <span>Какие финансовые условия предусмотрены?</span>
+                    <span>+</span>
+                </div>
+
+                <div class="faq-answer">
+                    Условия выплат зависят от действующих правил,
+                    позиции и других установленных факторов.
+                    Актуальную информацию необходимо проверять
+                    в официальных документах.
+                </div>
+
+            </div>
+
+            <div class="faq-item">
+
+                <div class="faq-question">
+                    <span>Какие документы регулируют программу?</span>
+                    <span>+</span>
+                </div>
+
+                <div class="faq-answer">
+                    Условия программы должны подтверждаться
+                    актуальными официальными нормативными документами.
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
 </section>
 
-<section class="section dark faq" id="faq">
-  <div class="section-head"><span>06 / FAQ</span><h2>ЧАСТЫЕ <em>ВОПРОСЫ</em></h2></div>
-  <div class="faq-list">
-    <details><summary>Сколько длится обучение?</summary><p>Срок зависит от выбранной программы. Точные условия уточняются при консультации.</p></details>
-    <details><summary>Кто может пройти обучение?</summary><p>Требования зависят от конкретной программы и условий набора.</p></details>
-    <details><summary>Что входит в программу?</summary><p>Теоретическая подготовка, знакомство с оборудованием, тренажёрная и практическая подготовка.</p></details>
-    <details><summary>Нужно ли иметь собственный БПЛА?</summary><p>Наличие собственного оборудования зависит от выбранного формата обучения.</p></details>
-    <details><summary>Как записаться?</summary><p>Оставьте заявку в форме ниже или свяжитесь с учебным центром по телефону.</p></details>
-  </div>
-</section>
+<!-- CONTACTS -->
 
-<section class="contact" id="contact">
-  <div class="contact-inner">
-    <div><span class="eyebrow">07 / КОНТАКТЫ</span><h2>ГОТОВЫ<br><em>НАЧАТЬ?</em></h2><p>Оставьте заявку, и специалист центра свяжется с вами.</p></div>
-    <form onsubmit="sendForm(event)">
-      <label>ИМЯ<input required name="name" placeholder="Ваше имя"></label>
-      <label>ТЕЛЕФОН<input required name="phone" type="tel" placeholder="+7 ___ ___-__-__"></label>
-      <label>EMAIL<input name="email" type="email" placeholder="mail@example.com"></label>
-      <label>КОММЕНТАРИЙ<textarea name="comment" placeholder="Ваш вопрос"></textarea></label>
-      <button class="btn btn-primary" type="submit">ОСТАВИТЬ ЗАЯВКУ</button>
-      <small>Нажимая кнопку, вы соглашаетесь с обработкой персональных данных.</small>
-      <div id="success"></div>
-    </form>
-  </div>
+<section id="contacts">
+
+    <div class="container">
+
+        <div class="section-heading">
+
+            <small>08 / Контакты</small>
+
+            <h2>Связаться с нами</h2>
+
+            <p>
+                По вопросам программы и дополнительной информации
+                используйте указанные контактные номера.
+            </p>
+
+        </div>
+
+        <div class="contacts-grid">
+
+    <a href="tel:+74952017373" class="contact-card">
+        <div class="contact-icon">☎</div>
+        <div>
+            <span>Основной номер</span>
+            <strong>+7 (495) 201-73-73</strong>
+        </div>
+    </a>
+
+    <a href="tel:+79855453043" class="contact-card">
+        <div class="contact-icon">☎</div>
+        <div>
+            <span>Дополнительный номер</span>
+            <strong>+7 (985) 545-30-43</strong>
+        </div>
+    </a>
+
+        </div>
+
+    </div>
+
 </section>
-</main>
 
 <footer>
-  <div class="brand"><span class="brand-symbol">✦</span><span><b>ЕЦПО</b><small>«САРМАТ»</small></span></div>
-  <p>Подготовка операторов БПЛА</p>
-  <a href="tel:+74950081090">+7 495 008-10-90</a>
-  <span>© 2026 ЕЦПО «САРМАТ»</span>
+
+    <div class="footer">
+
+        <div>
+
+            <div class="footer-title">
+                Проект «САРМАТ»
+            </div>
+
+            <p>
+                Информационный ресурс о подготовке
+                специалистов в области беспилотных систем.
+            </p>
+
+        </div>
+
+        <p>
+            Информация на сайте носит справочный характер.
+            Финансовые, юридические и иные условия необходимо
+            проверять по актуальным официальным документам.
+        </p>
+
+    </div>
+
 </footer>
 
-<script src="script.js"></script>
+<script>
+
+/* Появление элементов при прокрутке */
+
+const observer = new IntersectionObserver(
+    (entries) => {
+
+        entries.forEach(entry => {
+
+            if (entry.isIntersecting) {
+                entry.target.classList.add("visible");
+            }
+
+        });
+
+    },
+    {
+        threshold: 0.12
+    }
+);
+
+document.querySelectorAll(
+    ".section-heading, .card, .money-card, .feature, .timeline-item, .faq-item, .contact-card"
+).forEach(element => {
+
+    observer.observe(element);
+
+});
+
+
+/* FAQ */
+
+document.querySelectorAll(".faq-question").forEach(question => {
+
+    question.addEventListener("click", () => {
+
+        const item = question.parentElement;
+
+        item.classList.toggle("active");
+
+    });
+
+});
+
+
+/* Плавная навигация */
+
+document.querySelectorAll('a[href^="#"]').forEach(link => {
+
+    link.addEventListener("click", function(e) {
+
+        e.preventDefault();
+
+        const target = document.querySelector(this.getAttribute("href"));
+
+        if (target) {
+
+            target.scrollIntoView({
+                behavior: "smooth"
+            });
+
+        }
+
+    });
+
+});
+
+
+/* Изменение header при прокрутке */
+
+const header = document.getElementById("header");
+
+window.addEventListener("scroll", () => {
+
+    if (window.scrollY > 40) {
+
+        header.classList.add("scrolled");
+
+    } else {
+
+        header.classList.remove("scrolled");
+
+    }
+
+});
+
+</script>
+
 </body>
 </html>
